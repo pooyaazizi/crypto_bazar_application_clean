@@ -8,7 +8,11 @@ class CryptoListLoading extends CryptoListState {}
 
 class CryptoListLoaded extends CryptoListState {
   final List<Crypto> cryptos;
-  CryptoListLoaded(this.cryptos);
+  final bool isSearchLoadingVisible;
+  CryptoListLoaded(
+    this.cryptos, {
+    this.isSearchLoadingVisible = false,
+  });
 }
 
 class CryptoListError extends CryptoListState {

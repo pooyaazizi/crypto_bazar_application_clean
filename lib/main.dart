@@ -1,23 +1,21 @@
+import 'package:crypto_bazar_application_clean/core/di/service_locator.dart';
 import 'package:crypto_bazar_application_clean/core/theme/app_theme.dart';
-import 'package:crypto_bazar_application_clean/features/crypto/data/datasources/crypto_remote_datasource_impl.dart';
-import 'package:crypto_bazar_application_clean/features/crypto/data/repositories/crypto_repository_impl.dart';
-import 'package:crypto_bazar_application_clean/features/crypto/domain/usecases/get_cryptos.dart';
+
 import 'package:crypto_bazar_application_clean/features/crypto/presentation/bloc/crypto_list_bloc.dart';
+import 'package:crypto_bazar_application_clean/features/crypto/presentation/bloc/crypto_list_event.dart';
 import 'package:crypto_bazar_application_clean/features/crypto/presentation/pages/crypto_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
-  final remoteDataSource =
-      CryptoRemoteDatasourceImpl();
-  final repository = CryptoRepositoryImpl(
-    remoteDataSource,
-  );
-  final getCryptos = GetCryptos(repository);
+  initServiceLocator();
 
   runApp(
     BlocProvider(
-      create: (_) => CryptoListBloc(getCryptos),
+      create: (_) =>
+          GetIt.I.get<CryptoListBloc>()
+            ..add(LoadCryptoList()),
       child: const Application(),
     ),
   );
